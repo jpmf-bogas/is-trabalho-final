@@ -1,0 +1,56 @@
+services:
+  grpc-server:
+    build: ./grpc-server
+    container_name: grpc-server
+    ports:
+      - "50051:50051"
+    volumes:
+      - grpc-server:/app/media
+    # Define the OS/Container variable environments needed by the grpcserver
+
+    environment:
+      - GRPC_SERVER_PORT=50051
+      - MAX_WORKERS=10
+      - MEDIA_PATH=/app/media
+      - DBNAME=mydatabase
+      - DBUSERNAME=myuser
+      - DBPASSWORD=mypassword
+      - DBHOST=db
+      - DBPORT=5432
+
+    depends_on:
+      - db
+
+  rest-api-server:
+    build: ./rest_api_server
+    container_name: rest_api_server
+    ports:
+    - "8000:8000"
+    # Define the OS/Container variable environments needed by the grpc server
+    environment:
+      - GRPC_PORT=50051
+      - GRPC_HOST=grpc-server
+      - DBNAME=mydatabase
+      - DBUSERNAME=myuser
+      - DBPASSWORD=mypassword
+      - DBHOST=db
+      - DBPORT=5432
+    depends_on:
+      - db
+      - grpc-server
+
+  db:
+    image: postgres:latest
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  grpc-server:
+  pgdata:
