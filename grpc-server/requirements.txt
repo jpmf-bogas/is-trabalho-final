@@ -1,3 +1,5 @@
 grpcio
 grpcio-tools
 pg8000
+lxml
+pandas

@@ -1,11 +1,15 @@
 from concurrent import futures
 from settings import GRPC_SERVER_PORT, MAX_WORKERS, MEDIA_PATH, DBNAME, DBUSERNAME, DBPASSWORD, DBHOST, DBPORT
+from lxml import etree
 import os
 import server_services_pb2_grpc
 import server_services_pb2
 import grpc
 import pg8000
 import logging
+import pandas as pd
+import xml.etree.ElementTree as ET
+
 
 # Configure logging
 LOG_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -58,10 +62,52 @@ class SendFileService(server_services_pb2_grpc.SendFileServiceServicer):
             context.set_code(grpc.StatusCode.INTERNAL)
             return server_services_pb2.SendFileResponseBody(success=False)
 
+class CSVtoXMLService(server_services_pb2_grpc.CSVServiceServicer):
+    def ConvertCSVToXML(self, request, context):
+        csv_path = request.csv_path
+        xml_path = request.xml_path
+
+        # Check if the CSV file exists
+        if not os.path.exists(csv_path):
+            message = f"CSV file '{csv_path}' not found."
+            logger.error(message)
+            return server_services_pb2.CSVToXMLResponse(success=False, message=message)
+
+        try:
+            # Read the CSV using pandas
+            df = pd.read_csv(csv_path)
+
+            # Create the root XML element
+            root = ET.Element("Items")
+
+            # Iterate over DataFrame rows and create XML elements
+            for _, row in df.iterrows():
+                item = ET.SubElement(root, "Item")
+                for col_name, value in row.items():
+                    col_element = ET.SubElement(item, col_name)
+                    col_element.text = str(value)
+
+            # Write the XML to the specified file
+            tree = ET.ElementTree(root)
+            tree.write(xml_path, encoding="utf-8", xml_declaration=True)
+
+            logger.info(f"XML successfully generated at '{xml_path}'.")
+            return server_services_pb2.CSVToXMLResponse(success=True, message=f"XML file created at '{xml_path}'.")
+        except Exception as e:
+            error_message = f"Error converting CSV to XML: {str(e)}"
+            logger.error(error_message, exc_info=True)
+            context.set_details(error_message)
+            context.set_code(grpc.StatusCode.INTERNAL)
+            return server_services_pb2.CSVToXMLResponse(success=False, message=error_message)
+
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     # Consult the file "server_services_pb2_grpc" to see the name of the function generated to add the service to the server
     server_services_pb2_grpc.add_SendFileServiceServicer_to_server(SendFileService(), server)
+    # server_services_pb2_grpc.add_XMLServiceServicer_to_server(XMLServiceServicer(), server)
+    server_services_pb2_grpc.add_CSVServiceServicer_to_server(CSVtoXMLService(), server)
+
+
     server.add_insecure_port(f'[::]:{GRPC_SERVER_PORT}')
     print("Server running:")
     server.start()

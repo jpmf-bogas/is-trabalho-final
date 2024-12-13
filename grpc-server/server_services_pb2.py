@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x15server_services.proto\x12\x0fserver_services\"I\n\x13SendFileRequestBody\x12\x0c\n\x04\x66ile\x18\x01 \x01(\x0c\x12\x11\n\tfile_mime\x18\x02 \x01(\t\x12\x11\n\tfile_name\x18\x03 \x01(\t\"\'\n\x14SendFileResponseBody\x12\x0f\n\x07success\x18\x01 \x01(\x08\x32j\n\x0fSendFileService\x12W\n\x08SendFile\x12$.server_services.SendFileRequestBody\x1a%.server_services.SendFileResponseBodyb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x15server_services.proto\x12\x0fserver_services\"I\n\x13SendFileRequestBody\x12\x0c\n\x04\x66ile\x18\x01 \x01(\x0c\x12\x11\n\tfile_mime\x18\x02 \x01(\t\x12\x11\n\tfile_name\x18\x03 \x01(\t\"\'\n\x14SendFileResponseBody\x12\x0f\n\x07success\x18\x01 \x01(\x08\"8\n\x12ValidateXMLRequest\x12\x10\n\x08xml_path\x18\x01 \x01(\t\x12\x10\n\x08xsd_path\x18\x02 \x01(\t\"8\n\x13ValidateXMLResponse\x12\x10\n\x08is_valid\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"5\n\x0f\x43SVToXMLRequest\x12\x10\n\x08\x63sv_path\x18\x01 \x01(\t\x12\x10\n\x08xml_path\x18\x02 \x01(\t\"4\n\x10\x43SVToXMLResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t2j\n\x0fSendFileService\x12W\n\x08SendFile\x12$.server_services.SendFileRequestBody\x1a%.server_services.SendFileResponseBody2f\n\nXMLService\x12X\n\x0bValidateXML\x12#.server_services.ValidateXMLRequest\x1a$.server_services.ValidateXMLResponse2d\n\nCSVService\x12V\n\x0f\x43onvertCSVToXML\x12 .server_services.CSVToXMLRequest\x1a!.server_services.CSVToXMLResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -35,6 +35,18 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_SENDFILEREQUESTBODY']._serialized_end=115
   _globals['_SENDFILERESPONSEBODY']._serialized_start=117
   _globals['_SENDFILERESPONSEBODY']._serialized_end=156
-  _globals['_SENDFILESERVICE']._serialized_start=158
-  _globals['_SENDFILESERVICE']._serialized_end=264
+  _globals['_VALIDATEXMLREQUEST']._serialized_start=158
+  _globals['_VALIDATEXMLREQUEST']._serialized_end=214
+  _globals['_VALIDATEXMLRESPONSE']._serialized_start=216
+  _globals['_VALIDATEXMLRESPONSE']._serialized_end=272
+  _globals['_CSVTOXMLREQUEST']._serialized_start=274
+  _globals['_CSVTOXMLREQUEST']._serialized_end=327
+  _globals['_CSVTOXMLRESPONSE']._serialized_start=329
+  _globals['_CSVTOXMLRESPONSE']._serialized_end=381
+  _globals['_SENDFILESERVICE']._serialized_start=383
+  _globals['_SENDFILESERVICE']._serialized_end=489
+  _globals['_XMLSERVICE']._serialized_start=491
+  _globals['_XMLSERVICE']._serialized_end=593
+  _globals['_CSVSERVICE']._serialized_start=595
+  _globals['_CSVSERVICE']._serialized_end=695
 # @@protoc_insertion_point(module_scope)

@@ -98,3 +98,153 @@ class SendFileService(object):
             timeout,
             metadata,
             _registered_method=True)
+
+
+class XMLServiceStub(object):
+    """Service ValidateXML
+    """
+
+    def __init__(self, channel):
+        """Constructor.
+
+        Args:
+            channel: A grpc.Channel.
+        """
+        self.ValidateXML = channel.unary_unary(
+                '/server_services.XMLService/ValidateXML',
+                request_serializer=server__services__pb2.ValidateXMLRequest.SerializeToString,
+                response_deserializer=server__services__pb2.ValidateXMLResponse.FromString,
+                _registered_method=True)
+
+
+class XMLServiceServicer(object):
+    """Service ValidateXML
+    """
+
+    def ValidateXML(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+
+def add_XMLServiceServicer_to_server(servicer, server):
+    rpc_method_handlers = {
+            'ValidateXML': grpc.unary_unary_rpc_method_handler(
+                    servicer.ValidateXML,
+                    request_deserializer=server__services__pb2.ValidateXMLRequest.FromString,
+                    response_serializer=server__services__pb2.ValidateXMLResponse.SerializeToString,
+            ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+            'server_services.XMLService', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler,))
+    server.add_registered_method_handlers('server_services.XMLService', rpc_method_handlers)
+
+
+ # This class is part of an EXPERIMENTAL API.
+class XMLService(object):
+    """Service ValidateXML
+    """
+
+    @staticmethod
+    def ValidateXML(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/server_services.XMLService/ValidateXML',
+            server__services__pb2.ValidateXMLRequest.SerializeToString,
+            server__services__pb2.ValidateXMLResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+
+class CSVServiceStub(object):
+    """Service for CSV to XML conversion
+    """
+
+    def __init__(self, channel):
+        """Constructor.
+
+        Args:
+            channel: A grpc.Channel.
+        """
+        self.ConvertCSVToXML = channel.unary_unary(
+                '/server_services.CSVService/ConvertCSVToXML',
+                request_serializer=server__services__pb2.CSVToXMLRequest.SerializeToString,
+                response_deserializer=server__services__pb2.CSVToXMLResponse.FromString,
+                _registered_method=True)
+
+
+class CSVServiceServicer(object):
+    """Service for CSV to XML conversion
+    """
+
+    def ConvertCSVToXML(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+
+def add_CSVServiceServicer_to_server(servicer, server):
+    rpc_method_handlers = {
+            'ConvertCSVToXML': grpc.unary_unary_rpc_method_handler(
+                    servicer.ConvertCSVToXML,
+                    request_deserializer=server__services__pb2.CSVToXMLRequest.FromString,
+                    response_serializer=server__services__pb2.CSVToXMLResponse.SerializeToString,
+            ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+            'server_services.CSVService', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler,))
+    server.add_registered_method_handlers('server_services.CSVService', rpc_method_handlers)
+
+
+ # This class is part of an EXPERIMENTAL API.
+class CSVService(object):
+    """Service for CSV to XML conversion
+    """
+
+    @staticmethod
+    def ConvertCSVToXML(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/server_services.CSVService/ConvertCSVToXML',
+            server__services__pb2.CSVToXMLRequest.SerializeToString,
+            server__services__pb2.CSVToXMLResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)

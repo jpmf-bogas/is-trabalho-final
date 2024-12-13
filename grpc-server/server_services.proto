@@ -17,3 +17,38 @@ bool success = 1;
 service SendFileService {
 rpc SendFile (SendFileRequestBody) returns (SendFileResponseBody);
 }
+
+// Request message
+message ValidateXMLRequest {
+    string xml_path = 1;
+    string xsd_path = 2;
+}
+
+// Response message
+message ValidateXMLResponse {
+    bool is_valid = 1;
+    string message = 2;
+} 
+
+// Service ValidateXML
+service XMLService {
+    rpc ValidateXML (ValidateXMLRequest) returns (ValidateXMLResponse);
+}
+
+// Request message for CSV to XML
+message CSVToXMLRequest {
+    string csv_path = 1; // Path to the input CSV file
+    string xml_path = 2; // Path to the output XML file
+}
+
+// Response message for CSV to XML
+message CSVToXMLResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+// Service for CSV to XML conversion
+service CSVService {
+    rpc ConvertCSVToXML(CSVToXMLRequest) returns (CSVToXMLResponse);
+}
+
